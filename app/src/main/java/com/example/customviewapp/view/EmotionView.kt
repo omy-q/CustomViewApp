@@ -3,6 +3,7 @@ package com.example.customviewapp.view
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
+import android.graphics.Path
 import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.View
@@ -25,6 +26,7 @@ class EmotionView @JvmOverloads constructor(
     }
 
     private val paint = Paint()
+    private val path = Path()
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
@@ -78,5 +80,25 @@ class EmotionView @JvmOverloads constructor(
         paint.strokeWidth = borderSize.toFloat()
         canvas.drawOval(leftEye, paint)
         canvas.drawOval(rightEye, paint)
+    }
+
+    private fun drawMouth(canvas: Canvas) {
+        path.moveTo((3 * width / 16).toFloat(), (10 * height / 16).toFloat())
+        path.lineTo((13 * width / 16).toFloat(), (10 * height / 16).toFloat())
+        path.quadTo(
+            (width / 2).toFloat(),
+            (height + 2 * height / 16).toFloat(),
+            (3 * width / 16).toFloat(),
+            (10 * height / 16).toFloat(),
+        )
+
+        paint.style = Paint.Style.FILL
+        paint.color = ContextCompat.getColor(context, mouthColor)
+        canvas.drawPath(path, paint)
+
+        paint.style = Paint.Style.STROKE
+        paint.color = ContextCompat.getColor(context, borderColor)
+        paint.strokeWidth = borderSize.toFloat()
+        canvas.drawPath(path, paint)
     }
 }
