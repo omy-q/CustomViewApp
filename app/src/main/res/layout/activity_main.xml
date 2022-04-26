@@ -6,13 +6,9 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <com.example.customviewapp.view.SimpleCustomView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="16dp"
-        android:paddingBottom="16dp"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
+    <com.example.customviewapp.view.EmotionView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
