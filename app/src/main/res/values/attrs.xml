@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="EmotionView">
+        <attr name="faceColor" format="color"/>
+        <attr name="eyesColor" format="color"/>
+        <attr name="mouthColor" format="color"/>
+        <attr name="borderColor" format="color"/>
+        <attr name="borderSize" format="dimension"/>
+        <attr name="emotionState" format="enum">
+            <enum name="noWinksEyes" value="0"/>
+            <enum name="winksLeftEye" value="1"/>
+            <enum name="winksRightEye" value="2"/>
+        </attr>
+    </declare-styleable>
+</resources>
