@@ -12,4 +12,11 @@
             <enum name="winksRightEye" value="2"/>
         </attr>
     </declare-styleable>
+    <declare-styleable name="WaterRippleView">
+        <attr name="waterColor" format="color"/>
+        <attr name="waterGravity" format="enum">
+            <enum name="top" value="0"/>
+            <enum name="bottom" value="1"/>
+        </attr>
+    </declare-styleable>
 </resources>
