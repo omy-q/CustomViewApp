@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.*
 import androidx.core.content.ContextCompat
 import com.example.customviewapp.R
+import com.example.customviewapp.dp
 import kotlin.math.min
 
 class SimpleCustomView @JvmOverloads constructor(
@@ -19,8 +20,8 @@ class SimpleCustomView @JvmOverloads constructor(
 ) : View(context, attrs, defStyleAttr, defStyleRes) {
 
     companion object {
-        private val minViewWidth = (100 * Resources.getSystem().displayMetrics.density).toInt()
-        private val minViewHeight = (100 * Resources.getSystem().displayMetrics.density).toInt()
+        private val minViewWidth = 100.dp()
+        private val minViewHeight = 100.dp()
     }
 
     private val backgroundPaint = Paint()
