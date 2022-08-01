@@ -1,27 +1,37 @@
 package com.example.customviewapp
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.example.customviewapp.view.EmotionView
+import com.example.customviewapp.view.WaterRippleView
 
 class MainActivity : AppCompatActivity() {
-    private var emotionView: EmotionView? = null
-    private var clickCount = 0
+    private lateinit var waterView: WaterRippleView
+    private lateinit var emotionView: EmotionView
+    private var clickCount: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        initView()
+        initWaterRippleView()
+        initEmotionView()
     }
 
-    private fun initView() {
+    private fun initWaterRippleView() {
+        waterView = findViewById(R.id.water_view)
+        waterView.setOnClickListener {
+            waterView.startAnimation()
+        }
+    }
+
+    private fun initEmotionView() {
         emotionView = findViewById(R.id.emotion_view)
-        emotionView?.setOnClickListener {
-            clickCount ++
+        emotionView.setOnClickListener {
+            clickCount++
             if (clickCount > 2) {
                 clickCount = 0
             }
-            emotionView?.emotionState = clickCount
+            emotionView.emotionState = clickCount
         }
     }
 }
