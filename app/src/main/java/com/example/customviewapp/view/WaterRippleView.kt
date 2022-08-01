@@ -4,7 +4,6 @@ import android.animation.ValueAnimator
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
-import android.util.Log
 import android.view.View
 import android.view.animation.LinearInterpolator
 
@@ -59,37 +58,46 @@ class WaterRippleView @JvmOverloads constructor(
         initPoints()
     }
 
-    private fun initPoints() {
+    private fun initPoints(
+        xStartValue: Float = -width.toFloat(),
+        yDepthValue: Float = 0F
+    ) {
         when (waterGravity) {
-            TOP_WATER_GRAVITY -> initTopPoints()
-            BOTTOM_WATER_GRAVITY -> initBottomPoints()
+            TOP_WATER_GRAVITY -> initTopPoints(xStartValue, yDepthValue)
+            BOTTOM_WATER_GRAVITY -> initBottomPoints(xStartValue, yDepthValue)
         }
     }
 
-    private fun initTopPoints() {
-        startZeroPoint = PointF((-width).toFloat(), (0).toFloat())
-        secondZeroPoint = PointF((-width / 2).toFloat(), (0).toFloat())
-        thirdZeroPoint = PointF(0F, (0).toFloat())
-        fourthZeroPoint = PointF((width / 2).toFloat(), (0).toFloat())
-        endZeroPoint = PointF(width.toFloat(), (0).toFloat())
+    private fun initTopPoints(xStartValue: Float, yDepthValue: Float) {
+        val step = (width / 2).toFloat()
+        val waveRipple = if (yDepthValue == height.toFloat()) 0F else (0.2 * height).toFloat()
+        startZeroPoint = PointF(xStartValue, 0 + yDepthValue)
+        secondZeroPoint = PointF(startZeroPoint.x + step, 0 + yDepthValue)
+        thirdZeroPoint = PointF(secondZeroPoint.x + step, 0 + yDepthValue)
+        fourthZeroPoint = PointF(thirdZeroPoint.x + step, 0 + yDepthValue)
+        endZeroPoint = PointF(fourthZeroPoint.x + step, 0 + yDepthValue)
 
-        controlFirstPoint = PointF((-3 * width / 4).toFloat(), (-0.2 * height).toFloat())
-        controlSecondPoint = PointF((-width / 4).toFloat(), (0.2 * height).toFloat())
-        controlThirdPoint = PointF((width / 4).toFloat(), (-0.2 * height).toFloat())
-        controlFourthPoint = PointF((3 * width / 4).toFloat(), (0.2 * height).toFloat())
+        controlFirstPoint =
+            PointF(startZeroPoint.x + step / 2, 0 + yDepthValue - waveRipple)
+        controlSecondPoint =
+            PointF(secondZeroPoint.x + step / 2, 0 + yDepthValue + waveRipple)
+        controlThirdPoint =
+            PointF(thirdZeroPoint.x + step / 2, 0 + yDepthValue - waveRipple)
+        controlFourthPoint =
+            PointF(fourthZeroPoint.x + step / 2, 0 + yDepthValue + waveRipple)
     }
 
-    private fun initBottomPoints() {
-        startZeroPoint = PointF((-width).toFloat(), (height).toFloat())
-        secondZeroPoint = PointF((-width / 2).toFloat(), (height).toFloat())
-        thirdZeroPoint = PointF(0F, (height).toFloat())
-        fourthZeroPoint = PointF((width / 2).toFloat(), (height).toFloat())
-        endZeroPoint = PointF(width.toFloat(), (height).toFloat())
+    private fun initBottomPoints(startX: Float, step: Float) {
+        startZeroPoint = PointF(startX, (height).toFloat())
+        secondZeroPoint = PointF(startZeroPoint.x + step, (height).toFloat())
+        thirdZeroPoint = PointF(secondZeroPoint.x + step, (height).toFloat())
+        fourthZeroPoint = PointF(thirdZeroPoint.x + step, (height).toFloat())
+        endZeroPoint = PointF(fourthZeroPoint.x + step, (height).toFloat())
 
-        controlFirstPoint = PointF((-3 * width / 4).toFloat(), (height - 0.2 * height).toFloat())
-        controlSecondPoint = PointF((-width / 4).toFloat(), (height + 0.2 * height).toFloat())
-        controlThirdPoint = PointF((width / 4).toFloat(), (height - 0.2 * height).toFloat())
-        controlFourthPoint = PointF((3 * width / 4).toFloat(), (height + 0.2 * height).toFloat())
+        controlFirstPoint = PointF(startZeroPoint.x + step / 2, (height - 0.2 * height).toFloat())
+        controlSecondPoint = PointF(secondZeroPoint.x + step / 2, (height + 0.2 * height).toFloat())
+        controlThirdPoint = PointF(thirdZeroPoint.x + step / 2, (height - 0.2 * height).toFloat())
+        controlFourthPoint = PointF(fourthZeroPoint.x + step / 2, (height + 0.2 * height).toFloat())
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -146,4 +154,24 @@ class WaterRippleView @JvmOverloads constructor(
         )
     }
 
+    fun startAnimation() {
+        val animator = ValueAnimator.ofFloat(0F, 1F)
+        animator.duration = 4000
+        animator.interpolator = LinearInterpolator()
+        animator.repeatCount = ValueAnimator.INFINITE
+        animator.addUpdateListener {
+            val animFactor = animator.animatedValue as Float
+            val xStartValue = -width + animFactor * width
+            val yDepthValue = animFactor * height
+            initPoints(xStartValue, yDepthValue)
+            invalidate()
+        }
+        if (!animationIsRunning) {
+            animationIsRunning = true
+            animator.start()
+        } else {
+            animationIsRunning = false
+            animator.pause()
+        }
+    }
 }
