@@ -49,13 +49,20 @@ class EmotionView @JvmOverloads constructor(
             val typedArray = context.obtainStyledAttributes(attrs, R.styleable.EmotionView)
             faceColor = typedArray.getColor(R.styleable.EmotionView_faceColor, DEFAULT_FACE_COLOR)
             eyesColor = typedArray.getColor(R.styleable.EmotionView_eyesColor, DEFAULT_EYES_COLOR)
-            mouthColor = typedArray.getColor(R.styleable.EmotionView_mouthColor, DEFAULT_MOUTH_COLOR)
-            borderColor = typedArray.getColor(R.styleable.EmotionView_borderColor, DEFAULT_BORDER_COLOR)
-            borderSize = typedArray.getDimension(R.styleable.EmotionView_borderSize, DEFAULT_BORDER_VALUE)
+            mouthColor =
+                typedArray.getColor(R.styleable.EmotionView_mouthColor, DEFAULT_MOUTH_COLOR)
+            borderColor =
+                typedArray.getColor(R.styleable.EmotionView_borderColor, DEFAULT_BORDER_COLOR)
+            borderSize =
+                typedArray.getDimension(R.styleable.EmotionView_borderSize, DEFAULT_BORDER_VALUE)
             emotionState = typedArray.getInt(R.styleable.EmotionView_emotionState, NO_WINKS)
 
             typedArray.recycle()
         }
+    }
+
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        super.onMeasure(widthMeasureSpec, widthMeasureSpec)
     }
 
     override fun onDraw(canvas: Canvas) {

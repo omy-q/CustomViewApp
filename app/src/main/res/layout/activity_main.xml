@@ -6,19 +6,31 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <com.example.customviewapp.view.EmotionView
-        android:id="@+id/emotion_view"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        app:emotionState="winksRightEye"
-        app:eyesColor="@color/dark_blue"
-        app:faceColor="@color/rich_yellow"
-        app:mouthColor="@color/red"
-        app:borderColor="@color/black"
-        app:borderSize="2dp"
+    <com.example.customviewapp.view.WaterRippleView
+        android:id="@+id/water_view"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <com.example.customviewapp.view.EmotionView
+        android:id="@+id/emotion_view"
+        android:layout_width="300dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/water_view"/>
+
+    <com.example.customviewapp.view.SimpleCustomView
+        android:id="@+id/simple_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/emotion_view"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
